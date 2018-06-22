@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <title>Adres Defteri</title>
+  </head>
+  <body>
+    
+	<div class="row">
+		<div class="col-md-5">
+			<div class="col-md-12">
+				<h3>Arama</h3>
+				<div class="input-group input-group-sm mb-3">
+				  <div class="input-group-prepend">
+					<span class="input-group-text" id="inputGroup-sizing-sm">İsim</span>
+				  </div>
+				  <input type="text" class="form-control" id="nameSearch" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+				</div>
+				<div class="input-group input-group-sm mb-3">
+				  <div class="input-group-prepend">
+					<span class="input-group-text" id="inputGroup-sizing-sm">Soyisim</span>
+				  </div>
+				  <input type="text" class="form-control" id="surnameSearch" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+				</div>				
+			</div>
+			<div class="col-md-12">
+				<h3 style="display: inline-block;">Kişiler</h3>
+				<button type="button" class="btn btn-warning float-right" data-toggle="modal" data-target="#updatePersonModal">Güncelle</button>
+				<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#insertPersonModal">Ekle</button>
+				<button type="button" class="btn btn-danger float-right" data-toggle="modal" data-target="#deletePersonModal">Sil</button>
+			</div>
+			<div class="col-md-12">
+				<table class="table">
+				  <thead>
+					<tr>
+					  <th scope="col">ID</th>
+					  <th scope="col">Adı</th>
+					  <th scope="col">Soyadı</th>
+					  <th scope="col">Doğum tarihi</th>
+					  <th scope="col">İş Yeri</th>
+					  <th scope="col">Detay</th>
+					</tr>
+				  </thead>
+				  <tbody id="kisiler"></tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col-md-7">
+			<div class="col-md-12">
+				<h3>Arama</h3>
+				<div class="input-group input-group-sm mb-3">
+				  <div class="input-group-prepend">
+					<span class="input-group-text" id="inputGroup-sizing-sm">Adres Adı</span>
+				  </div>
+				  <input type="text" class="form-control" id="addressSearch" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+				</div>
+				
+				<h3 style="display: inline-block;">Adresler</h3>
+					<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#insertAddressModal">Ekle</button>
+					<button type="button" class="btn btn-warning float-right" data-toggle="modal" data-target="#updateAddressModal">Güncelle</button>
+				<table class="table">
+				  <thead>
+					<tr>
+					  <th scope="col">Kullanıcı ID</th>
+					  <th scope="col">Adres ID</th>
+					  <th scope="col">Adres Adı</th>
+					  <th scope="col">Şehir</th>
+					  <th scope="col">İlçe</th>
+					  <th scope="col">Mahalle</th>
+					  <th scope="col">Sokak</th>
+					  <th scope="col">Aparman</th>
+					  <th scope="col">Daire No</th>
+					</tr>
+				  </thead>
+				  <tbody id="adresler"></tbody>
+				</table>
+			</div>
+			<div class="col-md-12">
+				<h3 style="display: inline-block;">Telefonlar</h3>
+				<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#insertPhoneModal">Ekle</button>
+				<button type="button" class="btn btn-warning float-right" data-toggle="modal" data-target="#updatePhoneModal">Güncelle</button>
+				<table class="table">
+				  <thead>
+					<tr>
+					  <th scope="col">Kullanıcı ID</th>
+					  <th scope="col">Telefon ID</th>
+					  <th scope="col">Telefon Çeşidi</th>
+					  <th scope="col">Telefon No</th>
+					</tr>
+				  </thead>
+				  <tbody id="telefonlar"></tbody>
+				</table>
+			</div>				
+		</div>
+	</div>
+	
+	
+	<!-- Insert Person Modal -->
+	<div class="modal fade" id="insertPersonModal" tabindex="-1" role="dialog" aria-labelledby="insertPersonModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="insertPersonModalLabel">Kişi Ekle</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<form id="insertPersonForm">
+				<div class="form-group">
+					<label for="isim">Adı</label>
+					<input type="text" class="form-control" name="isim">
+				</div>
+				<div class="form-group">
+					<label for="soyisim">Soyadı</label>
+					<input type="text" class="form-control" name="soyisim">
+				</div>
+				<div class="form-group">
+					<label for="dogumTarihi">Doğum tarihi</label>
+					<input type="text" class="form-control" name="dogumTarihi">
+				</div>
+				<div class="form-group">
+					<label for="isYeri">İş yeri</label>
+					<input type="text" class="form-control" name="isYeri">
+				</div>
+			</form>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+			<button type="button" class="btn btn-primary" onclick="insertPerson();" data-dismiss="modal">Ekle</button>
+		  </div>
+		</div>
+	  </div>
+	  </div>
+	  <!-- Update Person Modal -->
+	<div class="modal fade" id="updatePersonModal" tabindex="-1" role="dialog" aria-labelledby="updatePersonModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="updatePersonModalLabel">Kişi Güncelle</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<form id="updatePersonForm">	
+				<div class="form-group">
+					<label for="kullaniciID">Kullanıcı ID</label>
+					<input type="text" class="form-control" id="updatePersonId">
+				</div>			
+				<div class="form-group">
+					<label for="isim">Adı</label>
+					<input type="text" class="form-control" name="isim">
+				</div>
+				<div class="form-group">
+					<label for="soyisim">Soyadı</label>
+					<input type="text" class="form-control" name="soyisim">
+				</div>
+				<div class="form-group">
+					<label for="dogumTarihi">Doğum tarihi</label>
+					<input type="text" class="form-control" name="dogumTarihi">
+				</div>
+				<div class="form-group">
+					<label for="isYeri">İş yeri</label>
+					<input type="text" class="form-control" name="isYeri">
+				</div>
+			</form>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+			<button type="button" class="btn btn-primary" onclick="updatePerson();" data-dismiss="modal">Güncelle</button>
+		  </div>
+		</div>
+	  </div>
+	  </div>
+	  <!-- Insert Address Modal -->
+	<div class="modal fade" id="insertAddressModal" tabindex="-1" role="dialog" aria-labelledby="insertAddressModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="insertAddressModalLabel">Adres Ekle</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<form id="insertAddressForm">
+				<div class="form-group">
+				    <label for="kullaniciID">Kullanıcı ID</label>
+				    <input type="text" class="form-control" id = "insertAddressID">
+				</div>
+				<div class="form-group">
+					<label for="adresAdi">Adres Adı</label>
+					<input type="text" class="form-control" name="adresAdi">
+				</div>
+				<div class="form-group">
+					<label for="sehir">Şehir</label>
+					<input type="text" class="form-control" name="sehir">
+				</div>
+				<div class="form-group">
+					<label for="ilce">İlçe</label>
+					<input type="text" class="form-control" name="ilce">
+				</div>
+				<div class="form-group">
+					<label for="mahalle">Mahalle</label>
+					<input type="text" class="form-control" name="mahalle">
+				</div>
+				<div class="form-group">
+					<label for="sokak">Sokak</label>
+					<input type="text" class="form-control" name="sokak">
+				</div>
+				<div class="form-group">
+					<label for="apartman">Apartman</label>
+					<input type="text" class="form-control" name="apartman">
+				</div>
+				<div class="form-group">
+					<label for="daireNo">Daire No</label>
+					<input type="number" class="form-control" name="daireNo">
+				</div>
+			</form>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+			<button type="button" class="btn btn-primary" onclick="insertAddress();" data-dismiss="modal">Ekle</button>
+		  </div>
+		</div>
+	  </div>
+	 </div>
+ 	  <!-- Update Address Modal -->
+	<div class="modal fade" id="updateAddressModal" tabindex="-1" role="dialog" aria-labelledby="updateAddressModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="updateAddressModalLabel">Adres Güncelle</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<form id="updateAddressForm">
+				<div class="form-group">
+				    <label for="kullaniciID">Kullanıcı ID</label>
+				    <input type="text" class="form-control" id="updateAddressKullaniciID">
+				</div>
+				<div class="form-group">
+				    <label for="kullaniciID">Adres ID</label>
+				    <input type="text" class="form-control" id="updateAddressAdresID">
+				</div>
+				<div class="form-group">
+					<label for="adresAdi">Adres Adı</label>
+					<input type="text" class="form-control" name="adresAdi">
+				</div>
+				<div class="form-group">
+					<label for="sehir">Şehir</label>
+					<input type="text" class="form-control" name="sehir">
+				</div>
+				<div class="form-group">
+					<label for="ilce">İlçe</label>
+					<input type="text" class="form-control" name="ilce">
+				</div>
+				<div class="form-group">
+					<label for="mahalle">Mahalle</label>
+					<input type="text" class="form-control" name="mahalle">
+				</div>
+				<div class="form-group">
+					<label for="sokak">Sokak</label>
+					<input type="text" class="form-control" name="sokak">
+				</div>
+				<div class="form-group">
+					<label for="apartman">Apartman</label>
+					<input type="text" class="form-control" name="apartman">
+				</div>
+				<div class="form-group">
+					<label for="daireNo">Daire No</label>
+					<input type="number" class="form-control" name="daireNo">
+				</div>
+			</form>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+			<button type="button" class="btn btn-primary" onclick="updateAddress();" data-dismiss="modal">Güncelle</button>
+		  </div>
+		</div>
+	  </div>
+	 </div>
+	<!-- Insert Phone Modal -->
+	<div class="modal fade" id="insertPhoneModal" tabindex="-1" role="dialog" aria-labelledby="insertPhoneModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="insertPhoneModalLabel">Telefon Ekle</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<form id="insertPhoneForm">
+				<div class="form-group">
+					<label for="kullaniciID">Kullanıcı ID</label>
+					<input type="text" class="form-control" name="kullaniciID">
+				</div>
+				<div class="form-group">
+					<label for="telefon_cesit">Telefon Çeşidi</label>
+					<input type="text" class="form-control" name="telefon_cesit">
+				</div>
+				<div class="form-group">
+					<label for="telefonNo">Telefon Numarası</label>
+					<input type="text" class="form-control" name="telefonNo">
+				</div>
+			</form>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+			<button type="button" class="btn btn-primary" onclick="insertPhones();" data-dismiss="modal">Ekle</button>
+		  </div>
+		</div>
+	  </div>
+	  </div>
+	<!-- Update Phone Modal -->
+	<div class="modal fade" id="updatePhoneModal" tabindex="-1" role="dialog" aria-labelledby="updatePhoneModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="updatePhoneModalLabel">Telefon Güncelle</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<form id="updatePhoneForm">
+				<div class="form-group">
+					<label for="kullaniciID">Kullanıcı ID</label>
+					<input type="text" class="form-control" id="updatePhonekullaniciID">
+				</div>
+				<div class="form-group">
+					<label for="telefonID">Telefon ID</label>
+					<input type="text" class="form-control" id="updatePhonetelefonID">
+				</div>
+				<div class="form-group">
+					<label for="telefon_cesit">Telefon Çeşidi</label>
+					<input type="text" class="form-control" name="telefon_cesit">
+				</div>
+				<div class="form-group">
+					<label for="telefonNo">Telefon Numarası</label>
+					<input type="text" class="form-control" name="telefonNo">
+				</div>
+			</form>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+			<button type="button" class="btn btn-primary" onclick="updatePhones();" data-dismiss="modal">Güncelle</button>
+		  </div>
+		</div>
+	  </div>
+	  </div>
+
+	<!-- Delete Person Modal -->
+	<div class="modal fade" id="deletePersonModal" tabindex="-1" role="dialog" aria-labelledby="deletePersonModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="deletePersonModalLabel">Kişi Sil</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<form id="deletePersonForm">
+				<div class="form-group">
+					<label for="kullaniciID">Kullanıcı ID</label>
+					<input type="text" class="form-control" name="kullaniciID">
+				</div>
+			</form>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+			<button type="button" class="btn btn-primary" onclick="deletePerson();" data-dismiss="modal">Sil</button>
+		  </div>
+		</div>
+	  </div>
+	  </div>
+	
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
